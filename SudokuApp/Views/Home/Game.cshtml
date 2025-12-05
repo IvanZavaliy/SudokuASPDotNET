@@ -1,0 +1,97 @@
+@model SudokuApp.Models.GameViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playing Sudoku</title>
+    <link rel="stylesheet" href="~/css/app.css" asp-append-version="true" />
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet">
+</head>
+<body>
+<nav>
+    <div class="nav-container">
+        <a href="/" class="nav-logo">Sudoku</a>
+        <div class="dark-mode-toggle" id="dark-mode-toggle">
+            <i class='bx bxs-sun'></i>
+            <i class='bx bxs-moon'></i>
+        </div>
+    </div>
+</nav>
+
+<div class="main" style="height: 100vh;">
+    <div class="screen">
+        <div class="main-game active" id="game-screen">
+            <div class="main-sudoku-grid">
+                @for (int row = 0; row < 9; row++)
+                {
+                    for (int col = 0; col < 9; col++)
+                    {
+                        // УВАГА: Тут тепер [row][col] замість [row, col]
+                        int val = Model.PuzzleGrid[row][col];
+                        bool isFilled = val != 0;
+
+                        string style = "";
+                        if (row == 2 || row == 5) style += "margin-bottom: 10px; ";
+                        if (col == 2 || col == 5) style += "margin-right: 10px; ";
+
+                        <div class="main-grid-cell @(isFilled ? "filled" : "")"
+                             style="@style"
+                             data-row="@row"
+                             data-col="@col"
+                             data-value="@val">
+                            @(val != 0 ? val.ToString() : "")
+                        </div>
+                    }
+                }
+                </div>
+            <div class="main-game-info">
+                <div class="main-game-info-box main-game-info-name">
+                    <span>@Model.PlayerName</span>
+                </div>
+                <div class="main-game-info-box main-game-info-level">
+                    <span>@Model.Level</span>
+                </div>
+            </div>
+
+            <div class="main-game-info-box main-game-info-time">
+                <span id="game-time">00:00</span>
+                <div class="pause-btn" id="btn-pause"><i class='bx bx-pause'></i></div>
+            </div>
+
+            <div class="numbers">
+                @for (int i = 1; i <= 9; i++)
+                {
+                    <div class="number">@i</div>
+                }
+                <div class="delete" id="btn-delete">X</div>
+            </div>
+        </div>
+
+        <div class="pause-screen" id="pause-screen">
+            <div class="btn btn-blue" id="btn-resume">Resume</div>
+            <a href="/" class="btn">New Game</a>
+        </div>
+
+        <div class="result-screen" id="result-screen">
+            <div class="congrate">Victory!</div>
+            <div class="info">Time</div>
+            <div id="result-time"></div>
+            <a href="/" class="btn">New Game</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Серіалізуємо масив рішень з C# у JS
+    const SOLUTION = @Json.Serialize(Model.SolutionGrid);
+</script>
+
+<script src="~/js/game-client.js"></script>
+<script src="~/js/theme.js"></script>
+</body>
+</html>
