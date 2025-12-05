@@ -177,9 +177,9 @@ document.querySelector('#btn-resume').addEventListener('click', () => {
     pause_screen.classList.remove('active');
 });
 
-document.querySelector('#btn-new-game').addEventListener('click', () => {
+/*document.querySelector('#btn-new-game').addEventListener('click', () => {
     window.location.href = "/"; // Повернення на головну
-});
+});*/
 
 // Старт
 startTimer();
