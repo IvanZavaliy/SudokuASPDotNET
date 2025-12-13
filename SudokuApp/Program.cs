@@ -1,7 +1,9 @@
+using SudokuApp.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Реєстрація нашого сервісу
-builder.Services.AddScoped<SudokuApp.Services.SudokuService>();
+builder.Services.AddScoped<SudokuService>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

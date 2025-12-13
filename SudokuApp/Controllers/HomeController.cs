@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using SudokuApp.Models;
 using SudokuApp.Services;
 
-namespace WebApplication1.Controllers
+namespace SudokuApp.Controllers
 {
     public class HomeController : Controller
     {

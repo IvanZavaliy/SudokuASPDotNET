@@ -106,6 +106,7 @@ const checkWin = () => {
         let val = parseInt(cells[i].getAttribute('data-value')) || 0;
 
         // Якщо клітинка порожня або не співпадає з відповіддю
+        
         if (val !== SOLUTION[row][col]) return false;
     }
     return true;
