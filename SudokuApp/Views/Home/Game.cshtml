@@ -11,8 +11,19 @@
     <link rel="stylesheet" href="~/css/app.css" asp-append-version="true" />
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet">
+    
+    <style>
+         /* Стилі для динамічно згенерованої JS-сітки */
+        .main-sudoku-grid {
+            /* Переконуємось, що це Grid */
+            display: grid !important; 
+            grid-template-columns: repeat(9, auto);
+            gap: 0; /* Відступи регулюються через margin у клітинках (app.css) */
+            border: 2px solid var(--color-txt);
+        }
+    </style>
 </head>
-<body>
+<body class="light">
 <nav>
     <div class="nav-container">
         <a href="/" class="nav-logo">Sudoku</a>
@@ -25,36 +36,18 @@
 
 <div class="main" style="height: 100vh;">
     <div class="screen">
-        <div class="main-game active" id="game-screen">
-            <div class="main-sudoku-grid">
-                @for (int row = 0; row < 9; row++)
-                {
-                    for (int col = 0; col < 9; col++)
-                    {
-                        // УВАГА: Тут тепер [row][col] замість [row, col]
-                        int val = Model.PuzzleGrid[row][col];
-                        bool isFilled = val != 0;
+        <div class="main-game active" id="game-screen" style="transform: translateX(0);">
+            
+            <div class="main-sudoku-grid" id="sudoku-board">
+                <div style="grid-column: span 9; text-align: center; padding: 20px;">Loading puzzle...</div>
+            </div>
 
-                        string style = "";
-                        if (row == 2 || row == 5) style += "margin-bottom: 10px; ";
-                        if (col == 2 || col == 5) style += "margin-right: 10px; ";
-
-                        <div class="main-grid-cell @(isFilled ? "filled" : "")"
-                             style="@style"
-                             data-row="@row"
-                             data-col="@col"
-                             data-value="@val">
-                            @(val != 0 ? val.ToString() : "")
-                        </div>
-                    }
-                }
-                </div>
             <div class="main-game-info">
                 <div class="main-game-info-box main-game-info-name">
                     <span>@Model.PlayerName</span>
                 </div>
                 <div class="main-game-info-box main-game-info-level">
-                    <span>@Model.Level</span>
+                    <span id="level-display">@Model.Level</span>
                 </div>
             </div>
 
@@ -69,6 +62,10 @@
                     <div class="number">@i</div>
                 }
                 <div class="delete" id="btn-delete">X</div>
+            </div>
+            
+             <div class="main-game-info" style="margin-top: 10px;">
+                <div class="btn" id="btn-undo" style="height: 50px; font-size: 1rem;">Undo</div>
             </div>
         </div>
 
@@ -86,12 +83,32 @@
     </div>
 </div>
 
-<script>
-    // Серіалізуємо масив рішень з C# у JS
-    const SOLUTION = @Json.Serialize(Model.SolutionGrid);
+<script src="~/js/theme.js"></script>
+
+<script type="module">
+    import { SudokuUI } from '@Url.Content("~/js/game-ui.js")';
+
+    // Як тільки сторінка завантажилась, запускаємо гру
+    document.addEventListener('DOMContentLoaded', () => {
+        // Створюємо екземпляр UI
+        window.gameUI = new SudokuUI();
+        
+        // Беремо рівень, який прийшов з C# Model, і передаємо в JS init()
+        // JS зробить запит fetch('/api/game/new/Hard') і намалює сітку
+        const level = '@Model.Level';
+        window.gameUI.init(level);
+
+        // Підключаємо паузу
+        document.getElementById('btn-pause').addEventListener('click', () => {
+             document.getElementById('pause-screen').classList.add('active');
+             window.gameUI.isPaused = true;
+        });
+        document.getElementById('btn-resume').addEventListener('click', () => {
+             document.getElementById('pause-screen').classList.remove('active');
+             window.gameUI.isPaused = false;
+        });
+    });
 </script>
 
-<script src="~/js/game-client.js"></script>
-<script src="~/js/theme.js"></script>
 </body>
 </html>

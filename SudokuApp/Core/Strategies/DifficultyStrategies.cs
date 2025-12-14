@@ -24,4 +24,9 @@ namespace SudokuApp.Core.Strategies
     {
         protected override int HolesCount => 65;
     }
+    
+    public class InhumanStrategy : BaseDifficultyStrategy
+    {
+        protected override int HolesCount => 74;
+    }
 }

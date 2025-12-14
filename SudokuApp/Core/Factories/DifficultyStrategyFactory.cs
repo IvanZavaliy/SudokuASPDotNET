@@ -19,7 +19,8 @@ public class DifficultyStrategyFactory
             { DifficultyLevel.Medium, new MediumStrategy() },
             { DifficultyLevel.Hard, new HardStrategy() },
             { DifficultyLevel.VeryHard, new VeryHardStrategy() },
-            { DifficultyLevel.Insane, new InsaneStrategy() }
+            { DifficultyLevel.Insane, new InsaneStrategy() },
+            { DifficultyLevel.Inhuman, new InhumanStrategy() }
         };
     }
 

@@ -1,6 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Sudoku Start";
-    Layout = null; // Не використовуємо layout для чистоти, як в оригіналі
+    Layout = null;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -12,33 +12,41 @@
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet">
 </head>
-<body class="light"> <nav>
-    <div class="nav-container">
-        <a href="#" class="nav-logo">Sudoku</a>
-        <div class="dark-mode-toggle" id="dark-mode-toggle">
-            <i class='bx bxs-sun'></i>
-            <i class='bx bxs-moon'></i>
+<body class="light"> 
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="nav-logo">Sudoku</a>
+            <div class="dark-mode-toggle" id="dark-mode-toggle">
+                <i class='bx bxs-sun'></i>
+                <i class='bx bxs-moon'></i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main" style="height: 100vh;">
+        <div class="screen">
+            <div class="start-screen active" style="transform: translateX(0);">
+                
+                <form action="/Home/Game" method="post" style="display:flex; flex-direction:column; align-items:center; gap:20px; width:100%;">
+                    
+                    <h1 style="font-family: 'Potta One', cursive; font-size: 3rem; margin-bottom: 20px;">Sudoku</h1>
+
+                    <input type="text" name="playerName" placeholder="Your name" maxlength="11" class="input-name" required>
+
+                    <select name="level" class="btn" style="text-align-last:center;">
+                        <option value="Easy">Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+                        <option value="VeryHard">Very Hard</option>
+                        <option value="Insane">Insane</option>
+                    </select>
+
+                    <button type="submit" class="btn btn-blue">Start Game</button>
+                </form>
+            </div>
         </div>
     </div>
-</nav>
-
-<div class="main" style="height: 100vh;">
-    <div class="screen">
-        <div class="start-screen active" style="transform: translateX(0);">
-            <form action="/Home/Game" method="post" style="display:flex; flex-direction:column; align-items:center; gap:20px; width:100%;">
-                <input type="text" name="playerName" placeholder="Your name" maxlength="11" class="input-name" required>
-
-                <select name="level" class="btn" style="text-align-last:center;">
-                    <option value="Easy">Easy</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Hard">Hard</option>
-                    <option value="Very hard">Very Hard</option>
-                </select>
-
-                <button type="submit" class="btn btn-blue">New Game</button>
-            </form>
-        </div>
-    </div>
-</div>
-<script src="~/js/theme.js"></script> </body>
+    
+    <script src="~/js/theme.js"></script> 
+</body>
 </html>

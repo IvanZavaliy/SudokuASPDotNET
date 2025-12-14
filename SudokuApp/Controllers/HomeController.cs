@@ -1,55 +1,33 @@
 using Microsoft.AspNetCore.Mvc;
 using SudokuApp.Models;
-using SudokuApp.Services;
 
 namespace SudokuApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly SudokuService _sudokuService;
-
-        public HomeController(SudokuService sudokuService)
-        {
-            _sudokuService = sudokuService;
-        }
+        // Ніяких сервісів тут більше не потрібно.
+        // Frontend сам постукає в API за даними.
 
         public IActionResult Index()
         {
             return View();
         }
 
+        // Метод Game (POST) видаляємо, оскільки переходимо на API (GET /api/game)
         [HttpPost]
         public IActionResult Game(string playerName, string level)
         {
-            var (puzzle, solution) = _sudokuService.GenerateSudoku(level);
-
+            // Ми не генеруємо тут поле! Це зробить JS через API.
+            // Ми просто передаємо налаштування на сторінку гри.
             var model = new GameViewModel
             {
-                PlayerName = playerName,
+                PlayerName = playerName ?? "Player",
                 Level = level,
-                // Використовуємо наш метод конвертації
-                PuzzleGrid = ToJaggedArray(puzzle),
-                SolutionGrid = ToJaggedArray(solution)
+                PuzzleGrid = null, // Поле буде пустим на цьому етапі
+                SolutionGrid = null
             };
 
             return View(model);
-        }
-
-        // --- Допоміжний метод для конвертації [,] -> [][] ---
-        private int[][] ToJaggedArray(int[,] twoDArray)
-        {
-            int rows = twoDArray.GetLength(0);
-            int cols = twoDArray.GetLength(1);
-            var jagged = new int[rows][];
-            for (int i = 0; i < rows; i++)
-            {
-                jagged[i] = new int[cols];
-                for (int j = 0; j < cols; j++)
-                {
-                    jagged[i][j] = twoDArray[i, j];
-                }
-            }
-            return jagged;
         }
     }
 }
