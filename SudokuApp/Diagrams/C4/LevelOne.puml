@@ -1,0 +1,10 @@
+@startuml C4_Context_UA
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+title Контекстна діаграма системи (System Context)
+
+Person(player, "Гравець", "Користувач веб-браузера на ПК.")
+System(sudoku_system, "Система SudokuApp", "Забезпечує ігровий процес, генерує пазли.")
+
+Rel(player, sudoku_system, "Грає, запитує нову гру", "HTTPS")
+@enduml

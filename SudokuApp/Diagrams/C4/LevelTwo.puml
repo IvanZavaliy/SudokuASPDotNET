@@ -1,0 +1,18 @@
+@startuml C4_Container_UA
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title Діаграма контейнерів (Container Diagram)
+
+Person(player, "Гравець")
+
+System_Boundary(sudoku_system, "SudokuApp") {
+    Container(spa, "Single Page Application", "JS / HTML / CSS", "Інтерфейс гри, обробка клавіатури, візуалізація.")
+    Container(api, "API Application", "ASP.NET Core", "REST API, генерація судоку, валідація правил.")
+    Container(memory, "In-Memory Store", "IMemoryCache", "Тимчасове зберігання сесій та пулу ігор.")
+}
+
+Rel(player, spa, "Завантажує UI", "HTTPS")
+Rel(spa, api, "API запити (JSON)", "HTTPS")
+Rel(api, memory, "Читає/Пише стан гри", "Internal")
+
+@enduml

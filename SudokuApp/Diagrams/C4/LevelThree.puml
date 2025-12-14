@@ -1,0 +1,25 @@
+@startuml C4_Component_API_UA
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title Діаграма компонентів: API Application
+
+Container(spa, "Клієнт (SPA)", "JavaScript", "Веб-браузер")
+
+Container_Boundary(api, "API Application") {
+    Component(controller, "Game Controller", "MVC Controller", "Точки входу: POST /move, GET /new")
+    Component(service, "Sudoku Service", "Клас", "Оркеструє логіку гри та перевірку правил.")
+    Component(generator, "Puzzle Generator", "DLX Алгоритм", "Генерує повні валідні сітки.")
+    Component(strategy, "Strategy Factory", "Factory Pattern", "Надає стратегії складності (Легко/Важко).")
+    Component(state, "State Manager", "Клас", "Керує тимчасовим станом гри.")
+    
+    ComponentDb(cache, "In-Memory Cache", "IMemoryCache", "Зберігає активні сесії та пул пазлів.")
+}
+
+Rel(spa, controller, "Викликає API", "JSON/HTTPS")
+Rel(controller, service, "Делегує запит")
+Rel(service, state, "Читає/Пише стан")
+Rel(service, generator, "Запитує новий пазл")
+Rel(generator, strategy, "Отримує параметри")
+Rel(state, cache, "Зберігає дані")
+
+@enduml

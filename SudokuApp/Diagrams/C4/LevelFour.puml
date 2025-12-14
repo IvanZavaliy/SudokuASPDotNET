@@ -1,0 +1,50 @@
+@startuml Class_Diagram_Strategy_UA
+!theme plain
+skinparam classAttributeIconSize 0
+
+title Діаграма класів: Патерн Стратегія (Difficulty Strategy)
+
+package "Sudoku.Core.Generation" {
+
+    interface IDifficultyStrategy {
+        + GenerateHoles(grid: int[,]): void
+        + ValidateSolvability(grid: int[,]): boolean
+    }
+
+    class SudokuGenerator {
+        - _strategy: IDifficultyStrategy
+        + Generate(level: DifficultyLevel): SudokuGrid
+    }
+
+    class EasyStrategy {
+        - HOLES_COUNT = 30
+        + GenerateHoles(grid: int[,])
+        + ValidateSolvability(grid: int[,])
+    }
+
+    class HardStrategy {
+        - HOLES_COUNT = 50
+        + GenerateHoles(grid: int[,])
+        + ValidateSolvability(grid: int[,])
+    }
+
+    class ExpertStrategy {
+        - HOLES_COUNT = 60
+        + GenerateHoles(grid: int[,])
+        + ValidateSolvability(grid: int[,])
+    }
+
+    ' Зв'язки
+    SudokuGenerator o-> IDifficultyStrategy : використовує
+    IDifficultyStrategy <|.. EasyStrategy : реалізує
+    IDifficultyStrategy <|.. HardStrategy : реалізує
+    IDifficultyStrategy <|.. ExpertStrategy : реалізує
+    
+    note right of SudokuGenerator
+        Контекстний клас.
+        Не знає деталей
+        конкретних стратегій.
+    end note
+}
+
+@enduml
