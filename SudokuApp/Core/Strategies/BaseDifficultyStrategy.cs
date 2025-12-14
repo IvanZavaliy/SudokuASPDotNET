@@ -6,14 +6,13 @@ namespace SudokuApp.Core.Strategies
     public abstract class BaseDifficultyStrategy : IDifficultyStrategy
     {
         protected readonly Random _random = new Random();
-        
-        // Кожна конкретна стратегія має лише вказати кількість "дірок"
+
         protected abstract int HolesCount { get; }
 
         public void RemoveNumbers(int[,] board)
         {
             int count = HolesCount;
-            int size = board.GetLength(0); // 9
+            int size = board.GetLength(0);
 
             while (count > 0)
             {
@@ -23,7 +22,7 @@ namespace SudokuApp.Core.Strategies
 
                 if (board[row, col] != 0)
                 {
-                    board[row, col] = 0; // Видаляємо значення
+                    board[row, col] = 0;
                     count--;
                 }
             }

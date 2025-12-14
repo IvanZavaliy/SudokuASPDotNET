@@ -440,3 +440,61 @@ body.dark .dark-mode-toggle .bxs-moon {
     75% { transform: translateX(-5px); }
     100% { transform: translateX(0); }
 }
+
+.main-sudoku-grid {
+    border: none !important;
+    display: grid;
+    gap: 4px;
+    grid-template-columns: repeat(9, auto);
+}
+
+.main-grid-cell[data-col="2"],
+.main-grid-cell[data-col="5"] {
+    margin-right: 8px;
+}
+
+.main-grid-cell[data-row="2"],
+.main-grid-cell[data-row="5"] {
+    margin-bottom: 8px;
+}
+
+.hover-highlight {
+    background-color: var(--bg-main) !important;
+
+    border: 1px solid var(--blue) !important;
+}
+
+.main-grid-cell.filled.hover-highlight {
+    background-color: var(--filled-bg) !important;
+}
+
+.main-grid-cell.selected {
+    background-color: var(--blue) !important;
+    color: var(--white);
+    border: none;
+    box-shadow: 0 0 8px var(--blue);
+}
+
+.cell-err {
+    background-color: var(--red) !important;
+    color: var(--white) !important;
+}
+
+.zoom-in {
+    animation: zoom-in 0.2s ease-out;
+}
+
+.cell-err {
+    background-color: var(--red) !important;
+    color: var(--white) !important;
+}
+
+.main-grid-cell.cell-err.hover-highlight {
+    background-color: var(--red) !important;
+
+    border: 1px solid var(--blue) !important;
+}
+
+.main-grid-cell.filled.cell-err.hover-highlight {
+    background-color: var(--red) !important;
+}

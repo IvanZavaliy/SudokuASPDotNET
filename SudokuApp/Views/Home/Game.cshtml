@@ -11,17 +11,6 @@
     <link rel="stylesheet" href="~/css/app.css" asp-append-version="true" />
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet">
-    
-    <style>
-         /* Стилі для динамічно згенерованої JS-сітки */
-        .main-sudoku-grid {
-            /* Переконуємось, що це Grid */
-            display: grid !important; 
-            grid-template-columns: repeat(9, auto);
-            gap: 0; /* Відступи регулюються через margin у клітинках (app.css) */
-            border: 2px solid var(--color-txt);
-        }
-    </style>
 </head>
 <body class="light">
 <nav>
@@ -47,7 +36,7 @@
                     <span>@Model.PlayerName</span>
                 </div>
                 <div class="main-game-info-box main-game-info-level">
-                    <span id="level-display">@Model.Level</span>
+                    <span>@Model.Level</span>
                 </div>
             </div>
 
@@ -64,7 +53,7 @@
                 <div class="delete" id="btn-delete">X</div>
             </div>
             
-             <div class="main-game-info" style="margin-top: 10px;">
+            <div class="main-game-info" style="margin-top: 10px;">
                 <div class="btn" id="btn-undo" style="height: 50px; font-size: 1rem;">Undo</div>
             </div>
         </div>
@@ -88,17 +77,12 @@
 <script type="module">
     import { SudokuUI } from '@Url.Content("~/js/game-ui.js")';
 
-    // Як тільки сторінка завантажилась, запускаємо гру
     document.addEventListener('DOMContentLoaded', () => {
-        // Створюємо екземпляр UI
         window.gameUI = new SudokuUI();
         
-        // Беремо рівень, який прийшов з C# Model, і передаємо в JS init()
-        // JS зробить запит fetch('/api/game/new/Hard') і намалює сітку
         const level = '@Model.Level';
         window.gameUI.init(level);
 
-        // Підключаємо паузу
         document.getElementById('btn-pause').addEventListener('click', () => {
              document.getElementById('pause-screen').classList.add('active');
              window.gameUI.isPaused = true;

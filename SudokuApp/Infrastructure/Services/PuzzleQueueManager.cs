@@ -8,14 +8,12 @@ namespace SudokuApp.Infrastructure.Services;
 
 public class PuzzleQueueManager : IPuzzleQueueManager
 {
-    // ConcurrentQueue забезпечує потокобезпеку без блокувань (lock-free) [cite: 27]
     private readonly Dictionary<DifficultyLevel, ConcurrentQueue<SudokuGameDto>> _queues;
 
     public PuzzleQueueManager()
     {
         _queues = new Dictionary<DifficultyLevel, ConcurrentQueue<SudokuGameDto>>();
-            
-        // Ініціалізуємо черги для всіх рівнів складності
+
         foreach (DifficultyLevel level in System.Enum.GetValues(typeof(DifficultyLevel)))
         {
             _queues[level] = new ConcurrentQueue<SudokuGameDto>();

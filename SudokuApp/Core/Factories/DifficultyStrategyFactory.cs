@@ -8,7 +8,6 @@ namespace SudokuAppSudokuApp.Core.Factories;
 
 public class DifficultyStrategyFactory
 {
-    // Словник для швидкого пошуку стратегії O(1)
     private readonly Dictionary<DifficultyLevel, IDifficultyStrategy> _strategies;
 
     public DifficultyStrategyFactory()
@@ -30,7 +29,6 @@ public class DifficultyStrategyFactory
         {
             return strategy;
         }
-        // Fallback на Easy, якщо щось пішло не так
         return _strategies[DifficultyLevel.Easy];
     }
 }

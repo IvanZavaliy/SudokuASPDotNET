@@ -1,4 +1,3 @@
-// wwwroot/js/theme.js
 const toggle = document.querySelector('#dark-mode-toggle');
 if(toggle) {
     toggle.addEventListener('click', () => {
@@ -6,7 +5,6 @@ if(toggle) {
         localStorage.setItem('darkmode', document.body.classList.contains('dark'));
     });
 }
-// Init
 if (localStorage.getItem('darkmode') === 'true') {
     document.body.classList.add('dark');
 }
